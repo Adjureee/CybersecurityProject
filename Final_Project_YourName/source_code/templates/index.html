@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Secure Registration and Login System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v='6') }}">
+    <script defer src="{{ url_for('static', filename='auth.js', v='6') }}"></script>
+</head>
+<body data-starting-tab="{{ active_tab }}">
+    <main class="auth-shell">
+        <section class="hero-panel" aria-label="Secure authentication overview">
+            <img src="{{ url_for('static', filename='auth-hero.png', v='6') }}" alt="" aria-hidden="true">
+            <div class="hero-overlay">
+                <p class="eyebrow">Cybersecurity Final Project</p>
+                <h1>Secure Access, Refined.</h1>
+                <p>A focused authentication experience for registration, login, and strong password validation.</p>
+            </div>
+        </section>
+
+        <section class="form-panel" aria-label="Authentication forms">
+            <article class="auth-card" id="auth-card">
+                <div class="card-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3.2 18.5 6v5.2c0 4.15-2.55 7.85-6.5 9.35-3.95-1.5-6.5-5.2-6.5-9.35V6L12 3.2Z"></path>
+                        <path d="M9.2 12.1 11 13.9l4-4.2"></path>
+                    </svg>
+                </div>
+                <header class="card-header">
+                    <p class="eyebrow">Secure Portal</p>
+                    <h2 id="card-title">Welcome Back</h2>
+                    <p id="card-copy">Sign in with your username and password.</p>
+                </header>
+
+                <div class="view-switch" role="tablist" aria-label="Authentication view">
+                    <button class="switch-button active" id="login-tab" data-tab="login" role="tab" aria-controls="login-form" aria-selected="true" type="button">Login</button>
+                    <button class="switch-button" id="register-tab" data-tab="register" role="tab" aria-controls="register-form" aria-selected="false" type="button">Register</button>
+                </div>
+
+                {% if message %}
+                    <p class="server-message {{ message_type }}" data-message-tab="{{ message_tab }}" role="status">{{ message }}</p>
+                {% endif %}
+
+                <div class="form-viewport">
+                    <div class="form-track">
+                    <form class="auth-form active" id="login-form" method="post" novalidate role="tabpanel" aria-labelledby="login-tab" aria-hidden="false">
+                        <input type="hidden" name="action" value="login">
+
+                        <div class="field">
+                            <input id="login-username" name="username" type="text" autocomplete="username" placeholder=" " required>
+                            <label for="login-username">Username</label>
+                            <p class="field-error" id="login-username-error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="field password-field">
+                            <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder=" " required>
+                            <label for="login-password">Password</label>
+                            <button class="icon-button password-toggle" type="button" aria-label="Show password" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2.25 12s3.5-6.25 9.75-6.25S21.75 12 21.75 12 18.25 18.25 12 18.25 2.25 12 2.25 12Z"></path>
+                                    <circle cx="12" cy="12" r="2.75"></circle>
+                                </svg>
+                            </button>
+                            <p class="field-error" id="login-password-error" aria-live="polite"></p>
+                        </div>
+
+                        <button class="primary-button" type="submit">Login</button>
+
+                    </form>
+
+                    <form class="auth-form" id="register-form" method="post" novalidate role="tabpanel" aria-labelledby="register-tab" aria-hidden="true">
+                        <input type="hidden" name="action" value="register">
+
+                        <div class="field">
+                            <input id="register-username" name="username" type="text" autocomplete="username" placeholder=" " required minlength="3">
+                            <label for="register-username">Username</label>
+                            <p class="field-error" id="register-username-error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="field password-field">
+                            <input id="register-password" name="password" type="password" autocomplete="new-password" placeholder=" " required>
+                            <label for="register-password">Password</label>
+                            <button class="icon-button password-toggle" type="button" aria-label="Show password" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2.25 12s3.5-6.25 9.75-6.25S21.75 12 21.75 12 18.25 18.25 12 18.25 2.25 12 2.25 12Z"></path>
+                                    <circle cx="12" cy="12" r="2.75"></circle>
+                                </svg>
+                            </button>
+                            <p class="field-error" id="register-password-error" aria-live="polite"></p>
+                        </div>
+
+                        <div class="strength-card" aria-live="polite">
+                            <div class="strength-header">
+                                <span>Password Strength</span>
+                                <strong id="strength-text">Weak</strong>
+                            </div>
+                            <div class="strength-track" aria-hidden="true">
+                                <span id="strength-bar"></span>
+                            </div>
+                            <p id="rules-text">Needs: lowercase, uppercase, number, symbol, at least 12 characters</p>
+                        </div>
+
+                        <div class="field password-field">
+                            <input id="confirm-password" name="confirm_password" type="password" autocomplete="new-password" placeholder=" " required>
+                            <label for="confirm-password">Confirm Password</label>
+                            <button class="icon-button password-toggle" type="button" aria-label="Show password" aria-pressed="false">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M2.25 12s3.5-6.25 9.75-6.25S21.75 12 21.75 12 18.25 18.25 12 18.25 2.25 12 2.25 12Z"></path>
+                                    <circle cx="12" cy="12" r="2.75"></circle>
+                                </svg>
+                            </button>
+                            <p class="field-error" id="confirm-password-error" aria-live="polite"></p>
+                        </div>
+
+                        <button class="primary-button" type="submit">Create Account</button>
+
+                    </form>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Secure Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css', v='6') }}">
+</head>
+<body>
+    <main class="dashboard-shell">
+        <section class="dashboard-card">
+            <nav class="dashboard-nav" aria-label="Dashboard navigation">
+                <div class="dashboard-brand">
+                    <span class="brand-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 3.2 18.5 6v5.2c0 4.15-2.55 7.85-6.5 9.35-3.95-1.5-6.5-5.2-6.5-9.35V6L12 3.2Z"></path>
+                            <path d="M9.2 12.1 11 13.9l4-4.2"></path>
+                        </svg>
+                    </span>
+                    <div>
+                        <p class="eyebrow">Authenticated Session</p>
+                        <h1>Secure Dashboard</h1>
+                    </div>
+                </div>
+                <a class="logout-link" href="{{ url_for('logout') }}">Logout</a>
+            </nav>
+
+            <div class="dashboard-hero">
+                <p class="status-pill">Login Successful</p>
+                <h2>Welcome back.</h2>
+                <div class="account-chip" aria-label="Signed in account">
+                    <span>Signed in as</span>
+                    <strong>{{ username }}</strong>
+                </div>
+                <p>Your account was verified by recomputing the password hash with the stored salt and private pepper.</p>
+            </div>
+
+            <div class="security-grid" aria-label="Security features">
+                <article class="security-tile">
+                    <span>01</span>
+                    <h3>Password Hashing</h3>
+                    <p>The plain password is never stored. The database keeps only the generated hash.</p>
+                </article>
+                <article class="security-tile">
+                    <span>02</span>
+                    <h3>Unique Salt</h3>
+                    <p>Every registered user receives a random salt before the password is hashed.</p>
+                </article>
+                <article class="security-tile">
+                    <span>03</span>
+                    <h3>Private Pepper</h3>
+                    <p>The pepper is used during hashing but is not saved in the database table.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
